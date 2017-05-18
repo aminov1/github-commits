@@ -10,9 +10,6 @@ import java.util.Map;
  */
 public interface RestCommunicator {
 
-    public static String HTTP_GET = "GET";
-    public static String HTTP_POST = "POST";
-
     public GitHubResponse sendRequest(String url, Map<String, String> headers, String httpMethod) throws IOException;
 
     public void setBody(String data);

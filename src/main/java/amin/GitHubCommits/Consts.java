@@ -13,20 +13,52 @@ public class Consts {
     /**
      * Unlimited output
      */
-    public static final int UNLIMITED_OUTPUT = 0;
-
+    public static final int NO_OUTPUT_LIMIT = 0;
+    /**
+     * Legal number of program arguments
+     */
+    public static final int LEGAL_ARGS_NUM = 1;
+    /**
+     * File argument index
+     */
+    public static final int FILE_ARG_INDEX = 0;
+    /**
+     * Int regular expression for number of days
+     */
+    public static final String INT_REGEX = "[0-9]*";
     //###################################################################################
     //#####################                   URLs                #######################
     //###################################################################################
     /**
-     * Internal base URL
+     * GitHub API URL
      */
-    public static final String INT_SERVER_URL = "https://agilemanager-int.saas.hp.com";
+    public static final String GITHUB_API_URL = "https://api.github.com";
+    /**
+     * GitHub Repos Resource
+     */
+    public static final String REPOS_RESOURCE = "/repos/%s/%s";
+    /**
+     * Commits Resource
+     */
+    public static final String COMMITS_RESOURCE = "/commits";
 
+    /**
+     * Since param (Only commits after this date will be returned.
+     * This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
+     */
+    public static final String SINCE_PARAM = "?since=%s";
 
     //###################################################################################
     //####################                   Errors                ######################
     //###################################################################################
+    /**
+     * Illegal number of program arguments
+     */
+    public static final String ILLEGAL_ARGS_NUM = "Error: Illegal number of arguments given! Please provide only the .properties file path.";
+    /**
+     * Not a file error
+     */
+    public static final String NO_FILE_ERROR = "Error: Couldn't find a file with the name specified!";
     /**
      * Invalid number of days (For values < 0)
      */
@@ -40,6 +72,17 @@ public class Consts {
      */
     public static final String INVALID_PROPERTIES_SYNTAX = "Error: There is a problem with the properties file! " +
             "Please check the syntax of its values.";
+    /**
+     * Invalid GitHub details
+     */
+    public static final String INVALID_GITHUB_DETAILS = "Error: Invalid GitHub details!";
+    /**
+     * Default error message
+     */
+    public static final String DEFAULT_ERROR = "Error: An error occurred "
+            + "while processing the request! Either the inserted owner-repository pair does not exist or " +
+            "GitHub is currently down!";
+
     //###################################################################################
     //####################               Properties Keys           ######################
     //###################################################################################
@@ -51,14 +94,6 @@ public class Consts {
      * Output File Path
      */
     public static final String OUTPUT_FILE_PATH = "outputFile";
-
-    //###################################################################################
-    //####################                Spring Beans             ######################
-    //###################################################################################
-    /**
-     * Bean of the Internal AGM farm
-     */
-    public static final String INTERNAL_BEAN = "agmIntClient";
 
     //###################################################################################
     //####################                 HTTP Codes              ######################
@@ -75,21 +110,72 @@ public class Consts {
      * HTTP Server Error Code: 500
      */
     public static final int SERVER_ERROR = 500;
+    /**
+     * HTTP Not found
+     */
+    public static final int NOT_FOUND = 404;
+
+    //###################################################################################
+    //####################                 HTTP Methods            ######################
+    //###################################################################################
+    /**
+     * HTTP GET
+     */
+    public static final String HTTP_GET = "GET";
+    /**
+     * HTTP POST
+     */
+    public static final String HTTP_POST = "POST";
 
     //###################################################################################
     //####################              GitHub JSON Keys           ######################
     //###################################################################################
     /**
-     * ID of backlog item
+     * SHA key
      */
-    public static final String BACKLOG_ID ="item_id";
+    public static final String SHA = "sha";
+    /**
+     * Commit key
+     */
+    public static final String COMMIT = "commit";
+    /**
+     * Committer key
+     */
+    public static final String COMMITTER = "committer";
+    /**
+     * Email key
+     */
+    public static final String COMMITTER_EMAIL = "email";
+    /**
+     * Date key
+     */
+    public static final String COMMIT_DATE = "date";
+    /**
+     * Message key
+     */
+    public static final String COMMIT_MESSAGE = "message";
 
     //###################################################################################
     //####################                    MISC                 ######################
     //###################################################################################
     /**
-     * Proper number of fields in a backlog item
+     * Zero Time
      */
-    public static final int VALID_BL_JSON_LENGTH = 57;
-
+    public static final String ZERO_TIME = "T00:00:00Z";
+    /**
+     * Milli seconds in a day
+     */
+    public static final long DAY_IN_MILLIS =  86400000;
+    /**
+     * Facebook GitHub owner
+     */
+    public static final String FACEBOOK_GH_OWNER = "facebook";
+    /**
+     * OSQUERY GitHub repository
+     */
+    public static final String OSQUERY_GH_REPOSITORY = "osquery";
+    /**
+     * Failure exit code
+     */
+    public static final int FAILURE_EXIT_CODE = 1;
 }

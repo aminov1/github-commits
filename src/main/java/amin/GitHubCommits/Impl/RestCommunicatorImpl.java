@@ -8,11 +8,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 import amin.GitHubCommits.Objects.GitHubResponse;
+import amin.GitHubCommits.Service.RestCommunicator;
 
 /**
  * Created by habash on 17/05/2017.
  */
-public class RestCommunicatorImpl {
+public class RestCommunicatorImpl implements RestCommunicator{
 
 
     private String body;

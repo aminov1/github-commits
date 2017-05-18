@@ -1,16 +1,18 @@
 package amin.GitHubCommits.Impl;
 
 import amin.GitHubCommits.Consts;
+import amin.GitHubCommits.Exception.GitHubCommitsException;
 import amin.GitHubCommits.Objects.RequestInput;
 import amin.GitHubCommits.Service.PropertiesParser;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
-import java.io.InputStream;
-
 
 /**
+ * This class is responsible for parsing .properties files. It current accepts only 2 keys: numOfDays and outputFile
+ *
  * Created by habash on 17/05/2017.
  */
 public class PropertiesParserImpl implements PropertiesParser{
@@ -24,25 +26,32 @@ public class PropertiesParserImpl implements PropertiesParser{
      * @return a RequestInput object with its key/value pairs
      */
     @Override
-    public RequestInput parseFile(File file) throws IOException {
-        String propFileName = file.getAbsolutePath();
+    public RequestInput parseFile(File file) throws GitHubCommitsException {
         Properties props = new Properties();
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+        FileInputStream inputStream = null;
 
         try {
+            inputStream = new FileInputStream(file);
             props.load(inputStream);
         } catch (IOException e1) {
-            throw new IOException(Consts.INVALID_PROPERTIES_SYNTAX);
+            throw new GitHubCommitsException(Consts.INVALID_PROPERTIES_SYNTAX);
         }
         finally {
             if(inputStream != null)
-                inputStream.close();
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    throw new GitHubCommitsException("Error: " + e.getMessage());
+                }
         }
 
-        String numofDays = props.getProperty(Consts.NUM_OF_DAYS);
+        String numOfDays = props.getProperty(Consts.NUM_OF_DAYS);
         String outputFile = props.getProperty(Consts.OUTPUT_FILE_PATH);
 
-        return new RequestInput(Integer.valueOf(numofDays), outputFile);
+        if(!numOfDays.matches(Consts.INT_REGEX))
+            throw new GitHubCommitsException(Consts.INVALID_NUM_OF_DAYS);
+
+        return new RequestInput(Integer.valueOf(numOfDays), outputFile);
 
     }
 }

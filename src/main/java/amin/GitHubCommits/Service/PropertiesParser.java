@@ -1,9 +1,9 @@
 package amin.GitHubCommits.Service;
 
+import amin.GitHubCommits.Exception.GitHubCommitsException;
 import amin.GitHubCommits.Objects.RequestInput;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by habash on 17/05/2017.
@@ -16,6 +16,6 @@ public interface PropertiesParser {
      * @param file the properties file to be parsed
      * @return  a RequestInput object with its key/value pairs
      */
-    public RequestInput parseFile(File file) throws IOException;
+    public RequestInput parseFile(File file) throws GitHubCommitsException;
 
 }
