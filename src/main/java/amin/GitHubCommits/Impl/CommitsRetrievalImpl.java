@@ -1,6 +1,6 @@
 package amin.GitHubCommits.Impl;
 
-import amin.GitHubCommits.Consts;
+import amin.GitHubCommits.Objects.Consts;
 import amin.GitHubCommits.Exception.GitHubCommitsException;
 import amin.GitHubCommits.Objects.GitHubResponse;
 import amin.GitHubCommits.Service.CommitsRetriever;

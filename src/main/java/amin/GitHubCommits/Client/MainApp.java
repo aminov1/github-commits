@@ -1,10 +1,10 @@
-package amin.GitHubCommits;
+package amin.GitHubCommits.Client;
 
+import amin.GitHubCommits.Objects.Consts;
 import amin.GitHubCommits.Exception.GitHubCommitsException;
-import amin.GitHubCommits.Impl.CommitsRetrievalImpl;
 import amin.GitHubCommits.Impl.PropertiesParserImpl;
 import amin.GitHubCommits.Objects.RequestInput;
-import amin.GitHubCommits.Service.CommitsRetriever;
+import amin.GitHubCommits.Resource.GitHubCommits;
 import amin.GitHubCommits.Service.PropertiesParser;
 
 import java.io.File;
@@ -15,7 +15,10 @@ import java.io.File;
  *
  * Created by habash on 18/05/2017.
  */
-public class GitHubCommits {
+public class MainApp {
+
+    public static final String SUCCESS_MESSAGE = "Done! To view the commits list please check run the html " +
+            "code in output file %s in your browser.";
 
     public static void main(String[] args) {
 
@@ -32,10 +35,15 @@ public class GitHubCommits {
 
         PropertiesParser pp = new PropertiesParserImpl();
         RequestInput rq;
+        HTMLBuilder builder;
+        String absoluteOutputFilePath;
         try {
             rq = pp.parseFile(propFile);
-            CommitsRetriever commits = new CommitsRetrievalImpl();
-            System.out.println(commits.getCommits(Consts.FACEBOOK_GH_OWNER, Consts.OSQUERY_GH_REPOSITORY, rq.getNumOfDays()));
+            GitHubCommits commits = new GitHubCommits();
+            builder = new HTMLBuilder();
+            absoluteOutputFilePath = builder.buildHTMLFile(commits.getCommits(Consts.FACEBOOK_GH_OWNER,
+                    Consts.OSQUERY_GH_REPOSITORY, rq.getNumOfDays()), rq.getOutputFile());
+            System.out.println(String.format(SUCCESS_MESSAGE, absoluteOutputFilePath));
         } catch (GitHubCommitsException e) {
             System.err.println(e.getMessage());
             System.exit(Consts.FAILURE_EXIT_CODE);

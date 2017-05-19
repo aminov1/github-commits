@@ -1,6 +1,5 @@
 package amin.GitHubCommits.Objects;
 
-import amin.GitHubCommits.Consts;
 import amin.GitHubCommits.Exception.GitHubCommitsException;
 
 
@@ -18,7 +17,7 @@ public class RequestInput {
         if(numOfDays < Consts.NO_OUTPUT_LIMIT)
             throw new GitHubCommitsException(Consts.INVALID_NUM_OF_DAYS);
         if(outputFile == null || "".equals(outputFile))
-            throw new GitHubCommitsException(Consts.INVALID_FILE_PATH);
+            throw new GitHubCommitsException(Consts.NULL_EMPTY_OUTPUT_FILE_PATH);
 
         this.numOfDays = numOfDays;
         this.outputFile = outputFile;

@@ -1,4 +1,4 @@
-package amin.GitHubCommits;
+package amin.GitHubCommits.Objects;
 
 /**
  * This class serves as a container for constants.
@@ -54,11 +54,12 @@ public class Consts {
     /**
      * Illegal number of program arguments
      */
-    public static final String ILLEGAL_ARGS_NUM = "Error: Illegal number of arguments given! Please provide only the .properties file path.";
+    public static final String ILLEGAL_ARGS_NUM = "Error: Illegal number of arguments given! " +
+            "Please provide only the .properties file path.";
     /**
      * Not a file error
      */
-    public static final String NO_FILE_ERROR = "Error: Couldn't find a file with the name specified!";
+    public static final String NO_FILE_ERROR = "Error: Couldn't find a properties file with the name specified!";
     /**
      * Invalid number of days (For values < 0)
      */
@@ -66,7 +67,19 @@ public class Consts {
     /**
      * Invalid file path
      */
-    public static final String INVALID_FILE_PATH = "Error: The provided path is invalid!";
+    public static final String NULL_EMPTY_OUTPUT_FILE_PATH = "Error: The provided path is invalid!";
+    /**
+     * Output file error
+     */
+    public static final String OUTPUT_FILE_GENERAL_ERROR = "Error: An error occurred while creating the output file!";
+    /**
+     * Out file is a directory
+     */
+    public static final String OUTPUT_FIL_IS_DIRECTORY = "Error: The provided output file is a directory!";
+    /**
+     * Output file already exists
+     */
+    public static final String OUTPUT_FILE_EXISTS_ERROR = "Error: The provided output file already exists!";
     /**
      * Invalid properties file syntax
      */
