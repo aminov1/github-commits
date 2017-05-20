@@ -65,27 +65,6 @@ public class Consts {
      */
     public static final String INVALID_NUM_OF_DAYS = "Error: The provided days limit is invalid!";
     /**
-     * Invalid file path
-     */
-    public static final String NULL_EMPTY_OUTPUT_FILE_PATH = "Error: The provided path is invalid!";
-    /**
-     * Output file error
-     */
-    public static final String OUTPUT_FILE_GENERAL_ERROR = "Error: An error occurred while creating the output file!";
-    /**
-     * Out file is a directory
-     */
-    public static final String OUTPUT_FIL_IS_DIRECTORY = "Error: The provided output file is a directory!";
-    /**
-     * Output file already exists
-     */
-    public static final String OUTPUT_FILE_EXISTS_ERROR = "Error: The provided output file already exists!";
-    /**
-     * Invalid properties file syntax
-     */
-    public static final String INVALID_PROPERTIES_SYNTAX = "Error: There is a problem with the properties file! " +
-            "Please check the syntax of its values.";
-    /**
      * Invalid GitHub details
      */
     public static final String INVALID_GITHUB_DETAILS = "Error: Invalid GitHub details!";

@@ -1,13 +1,13 @@
-package amin.GitHubCommits.Impl;
+package amin.GitHubCommits.Client;
 
 import amin.GitHubCommits.Objects.Consts;
 import amin.GitHubCommits.Exception.GitHubCommitsException;
-import amin.GitHubCommits.Objects.RequestInput;
-import amin.GitHubCommits.Service.PropertiesParser;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -19,14 +19,20 @@ public class PropertiesParserImpl implements PropertiesParser{
 
 
     /**
-     * Parses the given properties file and returns a RequestInput object with its key/value pairs. An IOException is thrown if the
+     * Invalid properties file syntax
+     */
+    private static final String INVALID_PROPERTIES_SYNTAX = "Error: There is a problem with the properties file! " +
+            "Please check the syntax of its values.";
+
+    /**
+     * Parses the given properties file and returns a Map object with its key/value pairs. An IOException is thrown if the
      * extension of the file is not .properties or the syntax of the file contents does not match those of a proper properties file.
      *
      * @param file the properties file to be parsed
-     * @return a RequestInput object with its key/value pairs
+     * @return a Map object with its key/value pairs
      */
     @Override
-    public RequestInput parseFile(File file) throws GitHubCommitsException {
+    public Map<String, String> parseFile(File file) throws GitHubCommitsException {
         Properties props = new Properties();
         FileInputStream inputStream = null;
 
@@ -34,7 +40,7 @@ public class PropertiesParserImpl implements PropertiesParser{
             inputStream = new FileInputStream(file);
             props.load(inputStream);
         } catch (IOException e1) {
-            throw new GitHubCommitsException(Consts.INVALID_PROPERTIES_SYNTAX);
+            throw new GitHubCommitsException(INVALID_PROPERTIES_SYNTAX);
         }
         finally {
             if(inputStream != null)
@@ -48,10 +54,17 @@ public class PropertiesParserImpl implements PropertiesParser{
         String numOfDays = props.getProperty(Consts.NUM_OF_DAYS);
         String outputFile = props.getProperty(Consts.OUTPUT_FILE_PATH);
 
+        if(numOfDays == null || outputFile == null)
+            throw new GitHubCommitsException((INVALID_PROPERTIES_SYNTAX));
+
         if(!numOfDays.matches(Consts.INT_REGEX))
             throw new GitHubCommitsException(Consts.INVALID_NUM_OF_DAYS);
 
-        return new RequestInput(Integer.valueOf(numOfDays), outputFile);
+        Map<String, String> propertiesKeysValues = new HashMap<String, String>();
+        propertiesKeysValues.put(Consts.NUM_OF_DAYS, numOfDays);
+        propertiesKeysValues.put(Consts.OUTPUT_FILE_PATH, outputFile);
+
+        return propertiesKeysValues;
 
     }
 }

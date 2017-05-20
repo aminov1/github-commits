@@ -2,12 +2,10 @@ package amin.GitHubCommits.Client;
 
 import amin.GitHubCommits.Objects.Consts;
 import amin.GitHubCommits.Exception.GitHubCommitsException;
-import amin.GitHubCommits.Impl.PropertiesParserImpl;
-import amin.GitHubCommits.Objects.RequestInput;
 import amin.GitHubCommits.Resource.GitHubCommits;
-import amin.GitHubCommits.Service.PropertiesParser;
 
 import java.io.File;
+import java.util.Map;
 
 
 /**
@@ -34,15 +32,16 @@ public class MainApp {
         }
 
         PropertiesParser pp = new PropertiesParserImpl();
-        RequestInput rq;
         HTMLBuilder builder;
         String absoluteOutputFilePath;
+        Map<String, String> propertiesKeysValues;
         try {
-            rq = pp.parseFile(propFile);
+            propertiesKeysValues = pp.parseFile(propFile);
             GitHubCommits commits = new GitHubCommits();
             builder = new HTMLBuilder();
             absoluteOutputFilePath = builder.buildHTMLFile(commits.getCommits(Consts.FACEBOOK_GH_OWNER,
-                    Consts.OSQUERY_GH_REPOSITORY, rq.getNumOfDays()), rq.getOutputFile());
+                    Consts.OSQUERY_GH_REPOSITORY, Integer.valueOf(propertiesKeysValues.get(Consts.NUM_OF_DAYS))),
+                    propertiesKeysValues.get(Consts.OUTPUT_FILE_PATH));
             System.out.println(String.format(SUCCESS_MESSAGE, absoluteOutputFilePath));
         } catch (GitHubCommitsException e) {
             System.err.println(e.getMessage());

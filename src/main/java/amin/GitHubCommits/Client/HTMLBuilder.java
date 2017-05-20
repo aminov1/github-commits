@@ -19,9 +19,33 @@ import java.io.IOException;
  */
 public class HTMLBuilder {
 
-    private static final String INVALID_INPUT_ERROR = "Error: Commits list provided for HTML file building " +
+    /**
+     * Output file error
+     */
+    private static final String OUTPUT_FILE_GENERAL_ERROR = "Error: An error occurred while creating the output file!";
+    /**
+     * Output file is a directory
+     */
+    private static final String OUTPUT_FILE_IS_DIRECTORY = "Error: The provided output file is a directory!";
+    /**
+     * Output file already exists
+     */
+    private static final String OUTPUT_FILE_EXISTS_ERROR = "Error: The provided output file already exists!";
+    /**
+     * Null or empty file path
+     */
+    public static final String OUTPUT_FILE_PATH_NULL_EMPTY = "Error: The provided path cannot be " +
+            "null or empty!";
+    /**
+     * Invalid list of commits
+     */
+    private static final String INVALID_LIST_ERROR = "Error: Commits list provided for HTML file building " +
             "cannot be null or empty!";
+    /**
+     * JSON parsing error
+     */
     private static final String JSON_PARSER_ERROR = "Error: Invalid JSON input syntax!";
+
 
     //###################################################################################
     //####################        For building the HTML code       ######################
@@ -64,7 +88,9 @@ public class HTMLBuilder {
      */
     public String buildHTMLFile(String commits, String outputFile) throws GitHubCommitsException {
         if(commits == null || "".equals(commits))
-            throw new GitHubCommitsException(INVALID_INPUT_ERROR);
+            throw new GitHubCommitsException(INVALID_LIST_ERROR);
+        if(outputFile == null || "".equals(outputFile))
+            throw new GitHubCommitsException(OUTPUT_FILE_PATH_NULL_EMPTY);
 
         JSONObject json;
         JSONArray array;
@@ -108,13 +134,13 @@ public class HTMLBuilder {
         BufferedWriter buff = null;
         try {
             if(htmlFile.isDirectory())
-                throw new GitHubCommitsException(Consts.OUTPUT_FIL_IS_DIRECTORY);
+                throw new GitHubCommitsException(OUTPUT_FILE_IS_DIRECTORY);
             if(!htmlFile.createNewFile())
-                throw new GitHubCommitsException(Consts.OUTPUT_FILE_EXISTS_ERROR);
+                throw new GitHubCommitsException(OUTPUT_FILE_EXISTS_ERROR);
             buff = new BufferedWriter(new FileWriter(htmlFile));
             buff.write(html);
         } catch (IOException e) {
-            throw new GitHubCommitsException(Consts.OUTPUT_FILE_GENERAL_ERROR + " " + e.getMessage());
+            throw new GitHubCommitsException(OUTPUT_FILE_GENERAL_ERROR + " " + e.getMessage());
         }
         finally {
             if(buff != null) {
@@ -122,7 +148,7 @@ public class HTMLBuilder {
                     buff.flush();
                     buff.close();
                 } catch (IOException e) {
-                    throw new GitHubCommitsException(Consts.OUTPUT_FILE_GENERAL_ERROR + " " + e.getMessage());
+                    throw new GitHubCommitsException(OUTPUT_FILE_GENERAL_ERROR + " " + e.getMessage());
                 }
             }
         }

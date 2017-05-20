@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.util.Calendar;
 
 /**
- * This class commuicates with GitHub to retrieve the commits of a given owner-repository pair. The results can be limited by the last desired number
- * of days
+ * This class communicates with GitHub to retrieve the commits of a given owner-repository pair. The results
+ * can be limited by the last desired number of days
  *
  * Created by habash on 17/05/2017.
  */
